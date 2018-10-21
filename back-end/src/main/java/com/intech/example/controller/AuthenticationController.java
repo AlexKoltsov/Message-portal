@@ -53,6 +53,7 @@ public class AuthenticationController {
         User foundUser = userService.findByLogin(user.getLogin())
                 .orElseThrow(() -> new MessagePortalException(String.format("User %s not found", user.getLogin())));
 
+        foundUser.setPassword(user.getPassword());
         userService.save(foundUser);
 
         return ResponseEntity.ok(foundUser);

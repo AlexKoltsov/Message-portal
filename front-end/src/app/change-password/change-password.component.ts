@@ -48,6 +48,7 @@ export class ChangePasswordComponent implements OnInit {
     return this.changePasswordForm.controls;
   }
 
+  // TODO: update password for user in front
   changePassword() {
     this.submitted = true;
 
@@ -59,8 +60,9 @@ export class ChangePasswordComponent implements OnInit {
     this.authService.changePassword(this.user.login, this.f.retypedPassword.value)
       .pipe(first())
       .subscribe(
-        data => {
+        user => {
           this.alertService.success('Password changed for user ' + this.user.login, true);
+          this.user = user;
         },
         error => {
           this.alertService.error(error['error']['message']);

@@ -28,6 +28,9 @@ export class AuthenticationService {
   }
 
   changePassword(username: string, newPassword: string) {
-    return this.http.post<any>(this.backendUrl + `/changePassword`, {login: username, password: newPassword});
+    return this.http.post<any>(this.backendUrl + `/changePassword`, {login: username, password: newPassword})
+      .pipe(tap(user => {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+      }));
   }
 }
