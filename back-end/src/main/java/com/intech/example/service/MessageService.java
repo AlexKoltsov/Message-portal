@@ -11,7 +11,7 @@ public interface MessageService {
 
     Message save(Message message);
 
-    void deleteById(Long id);
+    void delete(Message message);
 
     List<Message> findAll();
 

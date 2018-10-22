@@ -6,9 +6,6 @@ import com.intech.example.model.User;
 import com.intech.example.service.MessageService;
 import com.intech.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,14 +19,15 @@ public class MessageController {
     private final MessageService messageService;
 
     @Autowired
-    public MessageController(UserService userService, MessageService messageService) {
+    public MessageController(UserService userService,
+                             MessageService messageService) {
         this.userService = userService;
         this.messageService = messageService;
     }
 
     @GetMapping("/messages")
-    public ResponseEntity<List<Message>> listMessages() {
-        return ResponseEntity.ok(messageService.findAll());
+    public List<Message> listMessages() {
+        return messageService.findAll();
     }
 
 //    @GetMapping(value = "/messages", params = {"page", "size"})
@@ -49,8 +47,8 @@ public class MessageController {
         return ResponseEntity.ok(messageService.findByUser(user));
     }
 
-    @DeleteMapping("/messages/{id}")
-    public void deleteMessage(@PathVariable("id") Long messageId) {
-        messageService.deleteById(messageId);
+    @DeleteMapping("/messages")
+    public void deleteMessage(@RequestBody Message message) {
+        messageService.delete(message);
     }
 }

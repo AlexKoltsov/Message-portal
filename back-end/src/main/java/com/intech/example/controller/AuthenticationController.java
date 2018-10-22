@@ -2,8 +2,6 @@ package com.intech.example.controller;
 
 import com.intech.example.exception.MessagePortalException;
 import com.intech.example.model.User;
-import com.intech.example.model.UserSession;
-import com.intech.example.service.AuthenticationService;
 import com.intech.example.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +12,10 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
 
     private UserService userService;
-    private AuthenticationService authenticationService;
 
     @Autowired
-    public AuthenticationController(UserService userService,
-                                    AuthenticationService authenticationService) {
+    public AuthenticationController(UserService userService) {
         this.userService = userService;
-        this.authenticationService = authenticationService;
     }
 
     @PostMapping("/login")
@@ -42,7 +37,6 @@ public class AuthenticationController {
     @PostMapping("/logout")
     @ResponseBody
     public ResponseEntity<?> logout(@RequestBody User user) {
-        authenticationService.findByUser(user).ifPresent(userSession -> authenticationService.delete(userSession));
         return ResponseEntity.ok().build();
     }
 

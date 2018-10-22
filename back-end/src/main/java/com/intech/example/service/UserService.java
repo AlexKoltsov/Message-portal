@@ -1,5 +1,6 @@
 package com.intech.example.service;
 
+import com.intech.example.exception.MessagePortalException;
 import com.intech.example.model.User;
 
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.Optional;
 
 public interface UserService {
 
-    User save(User user);
+    User save(User user) throws MessagePortalException;
 
     void delete(User user);
 
